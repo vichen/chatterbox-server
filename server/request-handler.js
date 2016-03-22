@@ -11,7 +11,11 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
-var anObj = {results: []};
+var anObj = {results: [{
+  username: 'Jono',
+  text: 'Do my bidding!',
+  roomname: 'lobby'
+}]};
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -41,18 +45,26 @@ var requestHandler = function(request, response) {
   headers['Content-Type'] = 'application/json';
 
 
+  if (request.method === 'OPTIONS') {
+    console.log('OPTIONS is called');
+    response.writeHead(statusCodeOut, headers);
+    response.end();
+  }
 
   if (request.method === 'GET') {
     console.log('GET is called');
     console.log(request.url);
 
-    if (request.url === '/classes/messages') {
+    if (request.url === '/classes/messages/') {
+      console.log('200');
       response.writeHead(statusCodeOut, headers);
     } else {
+      console.log('404');
       response.writeHead(statusCodeError, headers);
     }
     
     var json = JSON.stringify(anObj);
+    console.log('my json is ', json);
     response.end(json);
 
   }
@@ -60,12 +72,14 @@ var requestHandler = function(request, response) {
   if (request.method === 'POST') {
     console.log('POST is called');
     response.writeHead(statusCodeIn, headers);
-    request.setEncoding();
+    //request.setEncoding();
     request.on('data', function(data) {
-      anObj.results.push(JSON.parse(data));
+      console.log('data is: ', data.toString('utf8'));
+      anObj.results.push(JSON.parse(data.toString('utf8')));
     });
     response.end('message received!');
   }
+
 
   // Tell the client we are sending them plain text.
   //
