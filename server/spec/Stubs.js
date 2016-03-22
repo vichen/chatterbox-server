@@ -22,11 +22,15 @@ module.exports = {
     this.url = url;
     this.method = method;
     this._postData = postdata;
-    this.setEncoding = function() { /* noop */ };
+    this.setEncoding = function() { this.encode('utf8'); }.bind(this);
 
     this.addListener = this.on = function(type, callback) {
       if (type === 'data') {
         callback(JSON.stringify(this._postData));
+      }
+
+      if (type === 'error') {
+        callback();
       }
 
       if (type === 'end') {
