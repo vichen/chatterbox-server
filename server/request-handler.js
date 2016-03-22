@@ -1,3 +1,39 @@
+// var fname = path.basename(url.parse(request.url, true).pathname);  
+  
+// var ext = path.extname(request.url);
+// var dname = path.dirname(request.url);
+  
+// if (ext !== '') {
+//   serveStatic(dname, fname, ext, response);
+// }
+
+// var mime = {
+//   '.txt': 'text/plain',
+//   '.css': 'text/css',
+//   '.js': 'text/javascript',
+//   '.htm': 'text/html',
+//   '.html': 'text/html',
+//   '.jpeg': 'image/jpeg',
+//   '.jpg': 'image/jpeg',
+//   '.png': 'image/png',
+//   '.gif': 'image/gif',
+//   '.ico': 'image/x-icon'
+// };
+  
+// var serveStatic = function(dname, fname, ext, response) {
+//   var filePath = path.join(__dirname + dname, fname);
+//   fs.readFile(filePath, function(error, data) {
+//     if (!error) {
+//       response.writeHead(200, {'Content-Type': mime[ext]});
+//       response.end(data);
+//     } else {
+//       response.writeHead(404, {'Content-Type': 'text/html'});
+//       response.end('There is no such file...');
+//       console.log(error);
+//     }
+//   });
+// };
+
 /*************************************************************
 
 You should implement your request handler function in this file.
@@ -12,6 +48,7 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 var uuid = require('node-uuid');
+var fs = require('fs');
 
 var anObj = {results: [{
   username: 'Jono',
@@ -56,8 +93,19 @@ var requestHandler = function(request, response) {
   if (request.method === 'GET') {
     console.log('GET is called');
     console.log(request.url);
+    if (request.url.match(/client\/index\.html/)) {
+      // response.writeHead(statusCode, {'Content-Type': 'text/html'});
+      // fs.readFile('../client/index.html', 'utf8', function(err, data) {
+      //   if (err) {
+      //     response.writeHead(statusCodeError, headers);
+      //     return response.end(err);
+      //   }
+      //   response.writeHead(statusCodeIn, headers);
+      //   response.end(data);
+      // });
+    }
 
-    if (request.url === '/classes/messages/') {
+    if (request.url.match(/classes\/messages/)) {
       console.log('200');
       response.writeHead(statusCodeOut, headers);
     } else {
