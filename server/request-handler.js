@@ -11,6 +11,8 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
+var uuid = require('node-uuid');
+
 var anObj = {results: [{
   username: 'Jono',
   text: 'Do my bidding!',
@@ -74,8 +76,10 @@ var requestHandler = function(request, response) {
     response.writeHead(statusCodeIn, headers);
     //request.setEncoding();
     request.on('data', function(data) {
-      console.log('data is: ', data.toString('utf8'));
-      anObj.results.push(JSON.parse(data.toString('utf8')));
+      var newMessage = JSON.parse(data.toString('utf8'));
+      newMessage.objectId = uuid.v4();
+      console.log('data is: ', newMessage);
+      anObj.results.push(newMessage);
     });
     response.end('message received!');
   }

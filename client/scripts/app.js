@@ -43,6 +43,7 @@ var app = {
       url: app.server,
       type: 'POST',
       data: JSON.stringify(data),
+      dataType: 'text',
       contentType: 'application/json',
       success: function (data) {
         // Trigger a fetch to update the messages, pass true to animate

@@ -14,5 +14,9 @@
     "eslint-config-hackreactor": "git://github.com/hackreactor-labs/eslint-config-hackreactor",
     "mocha": "^1.21.4",
     "request": "^2.34.0"
+  },
+  "dependencies": {
+    "n": "^2.1.0",
+    "node-uuid": "^1.4.7"
   }
 }
